@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Um pedido especial ❤️</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffe1e9, #f5d9ff, #dce9ff);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+.card {
+    width: 90%;
+    max-width: 390px;
+    padding: 35px 22px;
+    text-align: center;
+    background: rgba(255,255,255,0.85);
+    border-radius: 25px;
+    box-shadow: 0 15px 45px rgba(120,70,120,0.15);
+}
+
+.heart {
+    font-size: 55px;
+    margin-bottom: 15px;
+    animation: pulse 1.5s infinite;
+}
+
+h1 {
+    color: #bd527a;
+    font-size: 27px;
+    margin-bottom: 15px;
+}
+
+p {
+    color: #777;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    min-height: 55px;
+}
+
+button {
+    border: none;
+    padding: 13px 27px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#yes {
+    color: white;
+    background: #e77da4;
+    box-shadow: 0 5px 15px #e77da455;
+}
+
+#yes:hover {
+    transform: scale(1.08);
+}
+
+#no {
+    color: #777;
+    background: #eeeeee;
+}
+
+#message {
+    margin-top: 25px;
+    color: #bd527a;
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+@keyframes pulse {
+    50% { transform: scale(1.12); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <div class="heart">💗</div>
+
+    <h1>Você me desculpa?</h1>
+
+    <p>
+        Sei que talvez eu tenha errado,
+        mas nossa amizade é importante para mim.
+        Não quero perder sua amizade.
+        ❤️
+    </p>
+
+    <div class="buttons">
+        <button id="yes" onclick="accepted()">
+            Sim ❤️
+        </button>
+
+        <button id="no">
+            Não 🙃
+        </button>
+    </div>
+
+    <div id="message"></div>
+</div>
+
+<script>
+const no = document.getElementById("no");
+const yes = document.getElementById("yes");
+const message = document.getElementById("message");
+
+let escapes = 0;
+
+function moveNo() {
+    if (escapes >= 4) {
+        no.textContent = "Não";
+        no.style.position = "static";
+        message.textContent =
+            "Tudo bem se você não quiser. ❤️";
+        return;
+    }
+
+    escapes++;
+
+    no.style.position = "fixed";
+
+    const maxX = window.innerWidth - no.offsetWidth - 15;
+    const maxY = window.innerHeight - no.offsetHeight - 15;
+
+    no.style.left = Math.max(10, Math.random() * maxX) + "px";
+    no.style.top = Math.max(10, Math.random() * maxY) + "px";
+}
+
+no.addEventListener("mouseenter", moveNo);
+
+no.addEventListener("touchstart", (e) => {
+    if (escapes < 4) {
+        e.preventDefault();
+        moveNo();
+    }
+}, {passive: false});
+
+no.addEventListener("click", () => {
+    message.textContent =
+        "Tudo bem. Eu respeito sua decisão. ❤️";
+});
+
+function accepted() {
+    document.querySelector(".heart").textContent = "🥹❤️";
+    document.querySelector("h1").textContent = "Muito obrigado!";
+    document.querySelector("p").textContent =
+        "Sua amizade é muito importante para mim. Quero que possamos recomeçar!";
+    document.querySelector(".buttons").style.display = "none";
+
+    message.textContent = "Que nossa amizade continue! 🐱";
+}
+</script>
+
+</body>
+</html>
